@@ -1,0 +1,89 @@
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+     <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+	<style>
+		    /* Style the top navigation bar */
+        body {
+            background: #ffff;
+        }
+		    .topnav {
+		        overflow: hidden;
+		        background-color: black;
+		    }
+
+		    /* Style the topnav links */
+		    .topnav a {
+		        float: left;
+		        display: block;
+		        color: #f2f2f2;
+		        text-align: left;
+		        text-decoration: none;
+		    }
+            
+    </style>
+</head>
+
+<body>
+<div class="topnav">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-left">
+                <li><a href="/index">Home</a></li>
+            </ul>
+    </div>
+</div>
+
+<div class="w3-content w3-section col-md-4 col-md-offset-4" style="max-width:752px" style="max-height:420px">
+  <img class="mySlides w3-animate-fading" src="/static/assets/images/transparent_logo.png" style="width:100%">
+</div>
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}    
+    x[myIndex-1].style.display = "block";  
+    setTimeout(carousel, 8000);    
+}
+</script>
+
+
+<br><br>
+<h3><h3>
+<div class="search-container col-md-4 col-md-offset-4" style="text-align:center;">
+    <form action="{{url_for('inputml')}}">
+        <input type="text" placeholder="input.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<br><br>
+<h3><h3>
+<br><br>
+<p class="col-md-4 col-md-offset-5"></p>
+<div class="col-md-4 col-md-offset-4" style="text-align:center;">
+    <form action="{{url_for('detect')}}">
+    <button type="submit" class="btn btn-danger">DETECT THREAT</button>
+    </form>
+
+</div>
+
+</body>
+

@@ -1,0 +1,69 @@
+{%extends "base.html" %}
+
+{% block content %}
+
+<html>
+
+<head>
+<style>
+input[type=submit] {
+    width: 30%;
+    background-color: lightseagreen;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: #2196F3;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+.form-input{align-content: left;}
+
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<br>
+<br>
+
+        <div class="content" align="center">
+            <h1>Sign In</h1>
+            <img src="/static/assets/images/img_avatar.png" alt="Avatar" class="avatar"> 
+            <br>
+            <br>
+            <br>
+
+        <form action="" method="post">
+            {{form.hidden_tag()}}
+            <p> 
+                <div class="input-group">
+                <i class="glyphicon glyphicon-user"></i>
+                {{ form.username.label }} <br></div>
+                {{ form.username(size =32, placeholder="Enter username.." )}}
+                {% for error in form.username.errors %} 
+                <br>
+                <span style = "color:red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+
+            <p>{{ form.submit() }}</p>
+        </form>
+        </div>
+
+        </body>
+
+{% endblock %}
+
+
+</html>
