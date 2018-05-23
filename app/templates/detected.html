@@ -14,6 +14,30 @@
  
     </head>
     <body>
-	{{type}}
+	<!-- {{type}}
+
+	 -->
+	 <br>
+	 <br>
+	 <h1>Results</h1>
+
+	 <p>Here are the users that are flagged by the alogritm as possession a threatning behaviour through their messages. following are the files saved in our store that are realated to these users.</p>
+
+	 <br>
+	 <br>
+	 {%for key,val in type.iteritems()%}
+	 <div class="container">
+			<div class="panel panel-primary">
+  			<!-- Default panel contents -->
+  			<div class="panel-heading">{{key}}</div>
+ 			<ul class="list-group">
+  			{%for v in val%}
+  			<li class="list-group-item">{{v}}</li>
+  			{%endfor%}
+  			</ul>
+	</div>
+	{%endfor%}
+	</div>
+
 </body>
 </html>

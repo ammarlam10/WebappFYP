@@ -27,7 +27,7 @@ import pprint
 #end
 solr = pysolr.Solr('http://localhost:8983/solr/solr',timeout = 10)
 print "solr connected"
-# connection = happybase.Connection('localhost')
+#connection = happybase.Connection(host='localhost', port=9090, timeout=100000000, autoconnect=True, table_prefix=None, table_prefix_separator=b'_', compat='0.98', transport='buffered', protocol='binary')
 print "connected to hbase"
 path = ""
 # App config.
@@ -158,9 +158,18 @@ def detect():
                     if row['toxic'] >= 0.6 or row['severe_toxic'] >= 0.6 or row['threat'] >= 0.6:
                         tag[user] = True
 
+    files = pd.read_csv('/home/ammar/study/8th semester/FYP/HBASE/THREAT DATA - Sheet2.csv')
+    usfi = {}
+
+    for u in files['user']:
+        if u not in usfi and tag[u]==True:
+            usfi[u] = []
+    for index, row in files.iterrows():
+        if tag[row['user']]==True:
+            usfi[row['user']].append(row['filename']) 
 
 
-    return render_template('detected.html', type=tag)
+    return render_template('detected.html', type=usfi)
 
 
 
@@ -238,6 +247,11 @@ def inputml():
 
     submid = pd.DataFrame({'id': test["id"]})
     submission = pd.concat([submid, pd.DataFrame(preds, columns = label_cols)], axis=1)
+    #subm = submission.to_dict()
+    #print submission
+    #subm = submission.to_dict()
+    #print subm
+
     return render_template('inputml.html', title='search',type=submission)
 
 
@@ -263,6 +277,7 @@ def search():
 
 @app.route('/threat')
 def threat():
+    print('in Threat')
     return render_template('threat.html', title='Threat')
 
 
@@ -277,6 +292,10 @@ def login():
 
 @app.route("/start", methods=['GET', 'POST'])
 def start():
+
+    f = os.listdir('/home/ammar/gir_repo/pegasus-front-end/app/static/assets/images/hdfs')
+    for i in f:
+        os.remove('/home/ammar/gir_repo/pegasus-front-end/app/static/assets/images/hdfs/'+i)
     #form = LoginForm()
     #solr = pysolr.Solr('http://localhost:8983/solr/', timeout=10)
     
@@ -288,18 +307,20 @@ def start():
     global path
     path = request.args.get('search')
     result = solr.search(path)
-    save_path = '/home/ammar/test/'
-    type_dict = {'filename':[],'user':[],'location':[]}
+    save_path = '/home/ammar/gir_repo/pegasus-front-end/app/static/assets/images/hdfs/'
+    #type_dict = {'filename':[],'user':[],'location':[]}
+    type_dict = []
     for r in result:
         print r['title'][0]
-        type_dict['filename'].append(r['title'][0])
-        # table = connection.table('details')
-        # row = table.row(r['title'][0])
-        # print row['cf:userID']
-        # type_dict['user'].append(row['cf:userID'])
-        # print row['cf:path']
-        # type_dict['location'].append(row['cd:path'])
-        # hdfs.get(row['cf:path'],'/home/ammar/test')
+        #type_dict['filename'].append(r['title'][0])
+        #table = connection.table('details')
+        #row = table.row(r['title'][0])
+        #print row['cf:userID']
+        #type_dict['user'].append(row['cf:userID'])
+        #print row['cf:path']
+        #type_dict['location'].append(row['cf:path'])
+        hdfs.get('final3/'+r['title'][0],'/home/ammar/gir_repo/pegasus-front-end/app/static/assets/images/hdfs')
+        type_dict.append({'filename':r['title'][0],'user ID':r['author']})
 
-    return render_template('form2.html',type=type_dict)
+    return render_template('form2.html',type=type_dict,path = path)
 

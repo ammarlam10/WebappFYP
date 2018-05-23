@@ -14,6 +14,39 @@
  
     </head>
     <body>
-	{{type}}
+        <br>
+        <br>
+        <div class="container">
+<div class="panel panel-success">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Search Results</div>
+  <div class="panel-body">
+    <p style="fonnt-family:Helvetica">All the files having content matching to the keyword '{{path}}' along with their user ID</p>
+  </div>
+
+  <!-- Table -->
+  <table class="table">
+      <tr>
+    <th>File name</th>
+    <th>User ID</th>
+  </tr>
+  {%for val in type%}
+    <tr>
+        <td>{{val['filename']}}</td>
+        <td>{{val['user ID']}}</td>
+        <td><form method="get" action="/static/assets/images/hdfs/{{val['filename']}}" target="_blank">
+   <button type="submit" target="_blank">Download!</button>
+</form></td>
+    </tr>
+  {%endfor%}
+  </table>
+</div>
+</div>
+
+<!-- 
+    	{%for val in type%}
+    	<p><strong>File Name: </strong> {{val['filename']}}      <strong>User ID: </strong> {{val['user ID']}}</p> 
+    	{%endfor%} -->
+	<!--{{type}}-->
 </body>
 </html>

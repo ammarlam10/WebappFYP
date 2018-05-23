@@ -15,5 +15,9 @@
     </head>
     <body>
 	{{type}}
+	{%for key,val in type.iterrows()%}
+		<p>toxic: {{val['toxic']}}</p>
+		<p>sever toxic: {{val['severe_toxic']}}</p>
+	{%endfor%}
 </body>
 </html>
